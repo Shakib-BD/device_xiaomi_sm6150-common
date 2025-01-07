@@ -79,29 +79,22 @@ DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
 ODM_MANIFEST_FILES += $(COMMON_PATH)/configs/hidl/manifest-qva.xml
 
 # Kernel
-TARGET_KERNEL_ARCH := $(TARGET_ARCH)
-TARGET_KERNEL_HEADER_ARCH := $(TARGET_ARCH)
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DTBO := true
 
-# Kernel Path
 TARGET_KERNEL_SOURCE := kernel/xiaomi/sm6150
-TARGET_KERNEL_CONFIG := vendor/sdmsteppe-perf_defconfig
+TARGET_KERNEL_CONFIG := vendor/sdmsteppe-perf_defconfig vendor/debugfs.config
 
-# Kernel Cmdline
-BOARD_KERNEL_CMDLINE := \
-    console=ttyMSM0,115200n8 \
-    earlycon=msm_geni_serial,0x880000 \
-    androidboot.hardware=qcom \
-    androidboot.console=ttyMSM0 \
-    androidboot.usbcontroller=a600000.dwc3 \
-    service_locator.enable=1 \
-    lpm_levels.sleep_disabled=1 \
-    loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x880000
+BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom androidboot.console=ttyMSM0
+BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
+BOARD_KERNEL_CMDLINE += service_locator.enable=1
+BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
+BOARD_KERNEL_CMDLINE += loop.max_part=7
 
-# Enable set header version
+# Enable DTB in bootimage and set header version
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_BOOTIMG_HEADER_VERSION := 2
 BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
